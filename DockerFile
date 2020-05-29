@@ -1,0 +1,18 @@
+FROM python:3.8.3-buster
+
+MAINTAINER Gabriel Vargas "vmgabriel96@gmail.com"
+
+# We copy just the requirements.txt first to leverage Docker cache
+COPY ./requirements.txt /requirements.txt
+
+WORKDIR /
+# Create A public Directory
+RUN mkdir ./public
+RUN mkdir ./public/images
+
+RUN pip install -r requirements.txt
+
+COPY ./src ./src
+
+EXPOSE 7201
+CMD python -m src.__main__
